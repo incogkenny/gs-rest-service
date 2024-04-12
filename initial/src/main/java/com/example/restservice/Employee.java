@@ -18,6 +18,18 @@ public class Employee {
         this.title = title;
     }
 
+    @Override
+    public String toString() {
+
+        return "Employee [id="
+                + employee_id + ", firstName="
+                + first_name + ", lastName="
+                + last_name + ", email="
+                + email + "]";
+
+
+    }
+
     public String getFirst_name() {
         return first_name;
     }

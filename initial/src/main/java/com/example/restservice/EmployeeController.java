@@ -1,34 +1,29 @@
 package com.example.restservice;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.web.servlet.error.ErrorController;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-import java.util.List;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping(path = "/employees")
-public class EmployeeController implements ErrorController {
+@RequestMapping("/employees")
+public class EmployeeController {
 
-    @Autowired
-    private EmployeeManager employeeManager;
-    @GetMapping(
-            path = "http://localhost:8080/employees"
-    )
-    public List<Employee> getEmployees(){
+
+    private final EmployeeManager employeeManager = new EmployeeManager();
+
+    @GetMapping
+    public Employees getEmployees() {
         return employeeManager.getAllEmployees();
     }
 
-    @RequestMapping(value = "/error")
-    public String error() {
-        return "Error handling";
-    }
+    @PostMapping
+    public ResponseEntity<Object> addEmployee(@RequestBody Employee employee) {
 
-    public String getErrorPath() {
-        return "/error";
-    }
+        int id = employeeManager.getAllEmployees().getEmployeeList().size() + 1;
+        employee.setEmployee_id(id);
 
+        employeeManager.addEmployee(employee);
+
+        return ResponseEntity.accepted().body(employee);
+    }
 
 }

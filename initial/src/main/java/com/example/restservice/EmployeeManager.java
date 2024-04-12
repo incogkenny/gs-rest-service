@@ -2,12 +2,10 @@ package com.example.restservice;
 
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
-
 @Repository
 public class EmployeeManager {
 
-    private static Employees employees = new Employees();
+    private static final Employees employees = new Employees();
 
     static {
 
@@ -40,9 +38,12 @@ public class EmployeeManager {
     }
 
     // Method to return the list
-    public List<Employee> getAllEmployees() {
+    public Employees getAllEmployees() {
 
-        return employees.getEmployeeList();
+        return employees;
     }
 
+    public void addEmployee(Employee employee) {
+        employees.getEmployeeList().add(employee);
+    }
 }
